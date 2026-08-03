@@ -1,0 +1,1526 @@
+Đối tượng
+Khai báo lớp Point (điểm trong không gian hai chiều) với hai thuộc tính là tọa độ x và tọa độ y (số thực).
+from decimal import Decimal
+from math import sqrt
+class Point:
+    def __init__(self, a, b) -> None:
+        self.x = a
+        self.y = b
+    def distance(self, b):
+        dis = sqrt(pow(self.x - b.x, 2) + pow(self.y - b.y, 2))
+        return f'{dis:.4f}'
+if __name__ == '__main__':
+    t = int(input())
+    while t > 0:
+        arr = input().split()
+        p1 = Point(Decimal(arr[0]), Decimal(arr[1]))
+        p2 = Point(Decimal(arr[2]), Decimal(arr[3]))
+        print(p1.distance(p2))
+        t -= 1
+Khai báo lớp Rectangle với 3 thuộc tính:
+import sys
+class Rectangle:
+    def __init__(self, a, b, c) -> None:
+        self.perimeter = (a+b)*2
+        self.area = a*b
+        self.color = c[:1].upper() + c[1:].lower()
+
+arr = input().split() 
+if int(arr[0]) > 0 and int(arr[1]) > 0: 
+    r = Rectangle(int(arr[0]), int(arr[1]), arr[2]) 
+    print('{} {} {}'.format(r.perimeter, r.area, r.color)) 
+else: print('INVALID')
+sys.exit()
+if __name__ == '__main__':
+    t = int(input())
+    while t > 0:
+        arr = input().split()
+        r = Rectangle(int(arr[0]), int(arr[1]), int(arr[2]))
+        print('{} {} {}'.format(r.perimeter(), r.area(), r.color()))
+        t -= 1
+Khai báo lớp Phân số gồm hai thuộc tính tử số và mẫu số. Các giá trị đều nguyên dương và không quá 18 chữ số.
+from math import gcd
+a, b = map(int, input().split())
+print(f'{a//gcd(a,b)}/{b//gcd(a,b)}')
+Khai báo lớp Phân số gồm hai thuộc tính tử số và mẫu số. Các giá trị đều nguyên dương và không quá 18 chữ số.
+nhập vào hai phân số p và q. Tính tổng p + q, rút gọn và in ra kết quả.
+from math import gcd
+a, b, c, d = map(int, input().split())
+a = a*d + b*c
+b*=d
+print(f'{a//gcd(a,b)}/{b//gcd(a,b)}')
+Sử dụng lớp Point đã có trong bài 1, khai báo lớp Triangle với thuộc tính là 3 điểm. Viết các phương thức phù hợp để tính chu vi tam giác.
+from math import sqrt
+def dis(a, b): return sqrt(pow(a[0]-b[0],2)+pow(a[1]-b[1],2))
+t = int(input())
+l = []
+for i in range(t): l.extend([float(x) for x in input().split()])
+i = 0
+for j in range(t):
+    a = dis([l[i], l[i+1]],[l[i+2], l[i+3]])
+    b = dis([l[i+2], l[i+3]],[l[i+4], l[i+5]])
+    c = dis([l[i+4], l[i+5]], [l[i], l[i+1]])
+    i+=6
+    if max([a,b,c])*2 >= a+b+c: print('INVALID')
+    else: print(f'{round(a+b+c,3):.3f}')
+Sử dụng lớp Point đã có trong bài 1, khai báo lớp Triangle với thuộc tính là 3 điểm. Viết các phương thức phù hợp để tính diện tích tam giác.
+from math import sqrt
+def dis(a, b): return sqrt(pow(a[0]-b[0],2)+pow(a[1]-b[1],2))
+def area(a, b, c):
+    s = sqrt((a+b+c)*(a+b-c)*(a-b+c)*(-a+b+c))/4
+    return s
+t = int(input())
+l = []
+for i in range(t): l.extend([float(x) for x in input().split()])
+i = 0
+for j in range(t):
+    a = dis([l[i], l[i+1]],[l[i+2], l[i+3]])
+    b = dis([l[i+2], l[i+3]],[l[i+4], l[i+5]])
+    c = dis([l[i+4], l[i+5]], [l[i], l[i+1]])
+    i+=6
+    if max([a,b,c])*2 >= a+b+c: print('INVALID')
+    else: print(f'{area(a, b, c):.2f}')
+Khai báo lớp Matrix mô tả ma trận các số nguyên với các thuộc tính là kích thước ma trận và mảng hai chiều lưu các phần tử.
+Nhập ma trận a cấp n*m. Hãy viết chương trình tính tích của a với ma trận chuyển vị của a.
+for t in range(int(input())):
+    n, m = map(int, input().split())
+    a = []
+    for i in range(n): a.append(list(map(int, input().split())))
+    b = []
+    for i in range(m):
+        b.append([])
+        for j in range(n): b[i].append(a[j][i])
+    ans = []
+    for i in range(n):
+        r = []
+        for j in range(n):
+            x = 0
+            for k in range(m): x += a[i][k] * b[k][j]
+            r.append(str(x))
+        ans.append(r)
+    for i in ans: print(' '.join(i))
+Khai báo lớp Matrix mô tả ma trận các số nguyên với các thuộc tính là kích thước ma trận và mảng hai chiều lưu các phần tử.
+Nhập ma trận a cấp n*m. Hãy viết chương trình tính tích của a với ma trận chuyển vị của a.
+T = int(input())
+e = []
+while True:
+    try: e.extend(map(int, input().split()))
+    except: break
+I = 0
+for t in range(T):
+    n, m = e[I], e[I+1]
+    I+=2
+    a = []
+    for i in range(n): a.append([0]*m)
+    while len(e) - I < n*m: e.append(0)
+    for i in range(n):
+        for j in range(m): a[i][j] = e[I+j]
+        I+=m
+    b = []
+    for i in range(m):
+        b.append([])
+        for j in range(n): b[i].append(a[j][i])
+    ans = []
+    for i in range(n):
+        r = []
+        for j in range(n):
+            x = 0
+            for k in range(m): x += a[i][k] * b[k][j]
+            r.append(str(x))
+        ans.append(r)
+    for i in ans: print(' '.join(i))
+Khai báo lớp Số phức với hai thuộc tính là phần thực và phần ảo.
+for t in range(int(input())):
+    a = list(map(int, input().split()))
+    x, y =complex(a[0],a[1]), complex(a[2], a[3])
+    c, d = (x+y)*x, (x+y)*(x+y)
+    a = list(map(int, [c.real, c.imag, d.real, d.imag]))
+    print(f'{a[0]} + {a[1]}i, {a[2]} + {a[3]}i')
+Viết chương trình khai báo lớp Thí Sinh gồm các thông tin: Họ tên, Ngày sinh, Điểm môn 1, Điểm môn 2, Điểm môn 3 và Tổng điểm.
+Đọc thông tin 1 thí sinh từ bàn phím và in ra màn hình 3 thông tin: Họ tên, Ngày sinh, Tổng điểm
+class ThiSinh :
+    tongDiem = 0
+    def __init__(self, hoTen, ngaySinh, diem1, diem2, diem3) :
+        self.hoTen = hoTen
+        self.ngaySinh = ngaySinh
+        self.diem1 = diem1
+        self.diem2 = diem2
+        self.diem3 = diem3
+        self.tongDiem = diem1 + diem2 + diem3
+
+    def output(self) :
+        print(self.hoTen, self.ngaySinh, "{:.1f}".format(self.tongDiem))
+
+ht = input()
+ns = input()
+d1 = float(input())
+d2 = float(input())
+d3 = float(input())
+ts = ThiSinh(ht, ns, d1, d2, d3)
+ts.output()
+Để kiểm tra tư duy của các thành viên, câu lạc bộ IT PTIT ra một đề toán logic trong đó các tên thành viên trong CLB được sử dụng để đưa vào phép các phép so sánh. Chỉ có hai phép so sánh được sử dụng là lớn hơn và nhỏ hơn.
+from sys import stdin, setrecursionlimit
+input = stdin.readline
+arr, names = [], set()
+n = int(input())
+
+for i in range(n):
+    name1, sign, name2 = input().split()
+    names.add(name1)
+    names.add(name2)
+    if sign == '>': arr.append((name1, name2))
+    else: arr.append((name2, name1))
+a = sorted(names)
+N = len(a)
+
+def ind(name):
+    l, r = 0, N
+    while(l<r):
+        mid = (l+r)>>1
+        if a[mid] == name: return mid
+        if a[mid] < name: l=mid+1
+        else: r=mid
+    return -1
+
+ke = [[] for i in range(N)]
+for n1, n2 in arr: ke[ind(n1)].append(ind(n2))
+vis = [0]*N
+setrecursionlimit(10**6)
+def dfs(i):
+    vis[i] = 1
+    for j in ke[i]:
+        if vis[j] == 0: 
+            if(dfs(j)): return True
+        if vis[j] == 1: return True
+    vis[i] = 2
+    return False
+    
+cyc = False
+for i in range(N):
+    if vis[i] == 0:
+        if(dfs(i)):
+            cyc = True
+            break
+
+if cyc: print('impossible')
+else: print('possible')
+Lớp học phần môn XYZ của trường ABC có không quá 100 sinh viên. Danh sách sinh viên gồm các thông tin: mã sinh viên, họ tên, lớp. Môn học có 10 buổi. Dữ liệu điểm danh với mỗi sinh viên được cho bởi một xâu ký tự gồm 10 ký tự trong đó: x là có mặt, m là đến muộn, v là vắng
+t = int(input())
+m = {}
+for i in range(t) :
+    maSV = input()
+    ten = input()
+    lop = input()
+    m[maSV] = [ten, lop]
+for i in range(t) :
+    maSV, cc = input().split()
+    d = 10
+    for j in cc :
+        if j == 'm' : d -= 1
+        elif j == 'v' : d -= 2
+    if d < 0 : d = 0
+    m[maSV] = m[maSV] + [d]
+for i in m :
+    print(i, end = ' ')
+    for j in m[i] :
+        print(j, end = ' ')
+    if(m[i][-1] == 0) : print('KDDK')
+    else : print()
+Trong một ngày mưa nhiều, các trạm đo mưa hoạt động hết công suất. Tại mỗi trạm đo, các cơn mưa được ghi nhận thời điểm bắt đầu, thời điểm kết thúc và lượng mưa đo được. Một trạm mưa có thể có nhiều lần mưa trong ngày.
+
+def time(x, y):
+    return y[0] * 60 + y[1] - x[0] * 60 - x[1]
+
+a = {}
+n = int(input())
+for i in range(n) :
+    ten = input()
+    x = [int(i) for i in input().split(':')]
+    y = [int(i) for i in input().split(':')]
+    luongMua = int(input())
+    if ten not in a:
+        a[ten] = (time(x, y), luongMua)
+    else:
+        a[ten] = (a[ten][0] + time(x, y), a[ten][1] + luongMua)
+    
+p = 1
+for i in a:
+    print('T{:02d}'.format(p), i, "{:.2f}".format(a[i][1] * 60 / a[i][0]))
+    p += 1
+Trường THCS XYZ lập bảng điểm tổng kết cho học sinh. Có 10 môn học lần lượt gồm: Toán, Tiếng Việt, Ngoại ngữ, Vật lý, Hóa học, Sinh học, Lịch Sử, Địa, Giáo dục công dân và môn Công nghệ. Trong đó môn Toán và Tiếng Việt tính hệ số 2, các môn còn lại hệ số 1.
+from decimal import ROUND_HALF_UP, Decimal
+
+id = 1
+class HocSinh :
+    maHS = 'HS'
+    diemTrungBinh = 0
+    xepLoai = ''
+    def __init__(self, ten, diem) :
+        global id
+        self.maHS += '{:02d}'.format(id)
+        id += 1
+        self.ten = ten
+        x = 2 * diem[0] + 2 * diem[1]
+        for i in range(2, 10) :
+            x += diem[i]
+        x /= 12
+        if x < 5 : self.xepLoai = 'YEU'
+        elif x < 7 : self.xepLoai = 'TB'
+        elif x < 8 : self.xepLoai = 'KHA'
+        elif x < 9 : self.xepLoai = 'GIOI'
+        else : self.xepLoai = 'XUAT SAC'
+        self.diemTrungBinh = x.quantize(Decimal('0.1'), ROUND_HALF_UP)
+
+    def output(self) :
+        print(self.maHS, self.ten, self.diemTrungBinh, self.xepLoai)
+
+n = int(input())
+a = []
+for i in range(n) :
+    b = input()
+    c = [Decimal(x) for x in input().split()]
+    a.append(HocSinh(b, c))
+
+a = sorted(a, key= lambda x : (- x.diemTrungBinh, x.maHS))
+for i in a :
+    i.output()
+Tiền nước hàng tháng của thành phố ABC được tính theo đơn giá trong bảng sau:
+class HoaDon :
+    tien = 0
+    def __init__(self, ma, ten, cu, moi) :
+        self.ma = ma
+        self.ten = ten
+        s = moi - cu
+        if s <= 50:
+            s *= 100
+            s += s * 0.02
+        elif s <= 100:
+            s = 50 * 100 + (s - 50) * 150
+            s += s * 0.03
+        else:
+            s = 50 * 100 + 50 * 150 + (s - 100) * 200
+            s += s * 0.05
+        self.tien = round(s)
+
+    def output(self) :
+        print(self.ma, self.ten, self.tien)
+
+n = int(input())
+a = []
+for i in range(n) :
+    ten = input()
+    ma = "KH{:02d}".format(i + 1)
+    cu = int(input())
+    moi = int(input())
+    a.append(HoaDon(ma, ten, cu, moi))
+
+a = sorted(a, key= lambda x : (-x.tien))
+for i in a :
+    i.output()
+Khách sạn XYZ có đơn giá (theo ngày) được quy định khác nhau theo từng tầng. Khách hàng đến thuê phòng sẽ được tính tổng số tiền ở theo đơn giá cộng thêm chi phí dịch vụ phát sinh nếu có.
+from datetime import datetime
+
+tg = [0, 25, 34, 50, 80]
+
+class KhachHang :
+    def __init__(self, id, ten, phong, ngayDen, ngayDi, phuThu) :
+        self.id = 'KH{0:0>2}'.format(id)
+        self.ten = ten
+        self.phong = phong
+        self.ngayO = str(datetime.strptime(ngayDi, '%d/%m/%Y') - datetime.strptime(ngayDen, '%d/%m/%Y')).split()[0]
+        if self.ngayO == '0:00:00' : self.ngayO = 1
+        else : self.ngayO = int(self.ngayO) + 1
+        self.tong = tg[int(self.phong[0])] * self.ngayO + phuThu
+    
+    def __str__(self):
+        return self.id + ' ' + self.ten + ' ' + self.phong + ' ' + str(self.ngayO) + ' ' + str(self.tong)
+
+n = int(input())
+a = []
+for i in range(n):
+    a.append(KhachHang(i+1, input(), input(), input().strip(), input().strip(), int(input())))
+a.sort(key = lambda k : -k.tong)
+print(*a, sep = '\n')
+Cuộc đua xe đạp bắt đầu từ 6h00 với độ dài quãng đường đua là 120 Km. Các cua-rơ sẽ được ghi nhận thành tích dựa trên thời điểm đến đích. Hãy xếp hạng theo thứ tự thành tích giảm dần.
+class CuaRo :
+    def __init__(self, ten, donVi, thoiGian) :
+        a = [i[0] for i in ten.split()]
+        b = [i[0] for i in donVi.split()]
+        self.id = ''.join(b) + ''.join(a)
+        self.ten = ten
+        self.donVi = donVi
+        c = thoiGian.split(':')
+        self.vanToc = 120 / (int(c[0]) - 6 + int(c[1]) / 60)
+
+    def __str__(self) :
+        return f"{self.id} {self.ten} {self.donVi} {round(self.vanToc)} Km/h"
+
+n = int(input())
+cuaRo = []
+for i in range(n) :
+    cuaRo.append(CuaRo(input(), input(), input()))
+cuaRo = sorted(cuaRo, key = lambda x : -x.vanToc)
+print(*cuaRo, sep = '\n')
+Trường THPT ACB tuyển giáo viên mới cho ba môn Toán, Lý, Hóa. Theo yêu cầu mới, bài thi tuyển gồm 2 nội dung: Tin học và Chuyên môn. Điểm thi Tin học sẽ được nhân đôi khi tính tổng điểm.
+mon = ['TOAN', 'LY', 'HOA']
+cong = [2, 1.5, 1, 0]
+
+class GV :
+    def __init__(self, id, ten, ma, d1, d2) :
+        self.id = 'GV{0:0>2}'.format(id)
+        self.ten = ten
+        self.mon = mon[ord(ma[0]) - ord('A')]
+        self.d = 2 * d1 + d2 + cong[int(ma[1]) - 1]
+    def __str__(self) :
+        s = self.id + ' ' + self.ten + ' ' + self.mon + ' ' + str(self.d)
+        if self.d >= 18 : s += ' TRUNG TUYEN'
+        else : s += ' LOAI'
+        return s
+
+n = int(input())
+ds = []
+for i in range(n) :
+    ds.append(GV(i + 1, input(), input(), float(input()), float(input())))
+ds = sorted(ds, key = lambda x : -x.d)
+print(*ds, sep = '\n')
+Doanh nghiệp X cần tuyển một số nhân viên mới. Bài thi tuyển có hai phần: lý thuyết và thực hành. Sau khi tính điểm trung bình, các thí sinh sẽ được xếp thành 4 loại:
+class NhanVien :
+    def __init__(self, id, ten, d1, d2) :
+        self.id = 'TS0' + str(id)
+        self.ten = ten
+        if d1 > 10 : d1 /= 10
+        if d2 > 10 : d2 /= 10
+        self.d = (d1 + d2) / 2
+        if self.d < 5 : self.l = 'TRUOT'
+        elif self.d < 8 : self.l = 'CAN NHAC'
+        elif self.d < 9.5 : self.l = 'DAT'
+        else : self.l = 'XUAT SAC'
+    
+n = int(input())
+a = []
+for i in range(n) :
+    ten = input()
+    d1 = float(input()) 
+    d2 = float(input())
+    a.append(NhanVien(i + 1, ten, d1, d2))
+a.sort(key = lambda x : x.d, reverse = True)
+for i in a :
+    print(i.id, i.ten, '{:.2f}'.format(i.d), i.l)
+Cửa hàng điện máy – điện lạnh cần lập hóa đơn tính tiền cho khách hàng. Mỗi mặt hàng sẽ có đơn giá và một số tiền được gọi là chiết khấu trên tổng hóa đơn. Số tiền phải thanh toán sẽ bằng đơn giá * số lượng sau đó trừ đi tiền chiết khấu.
+class MatHang :
+    tongtien = 0
+    def __init__(self, ma, ten, soluong, gia, chietkhau) :
+        self.ma = ma
+        self.ten = ten
+        self.soluong = soluong
+        self.gia = gia
+        self.chietkhau = chietkhau
+        self.tongtien = self.soluong * self.gia - self.chietkhau
+    def __str__(self) :
+        return self.ma + " " + self.ten + " " + str(self.soluong) + " " + str(self.gia) + " " + str(self.chietkhau) + " " + str(self.tongtien)
+
+n = int(input())
+a = []
+for i in range(n) :
+    ma = input()
+    ten = input()
+    soluong = int(input())
+    gia = int(input())
+    chietkhau = int(input())
+    a.append(MatHang(ma, ten, soluong, gia, chietkhau))
+a = sorted(a, key = lambda x : -x.tongtien)
+for i in a :
+    print(i)
+Quán Game mùa này vắng khách nên chủ quán quyết định tính tiền chi tiết đến từng phút. Dựa trên dữ liệu giờ vào và giờ ra, hãy tính thời gian chơi game của các Game thủ nhé.
+class Gamer :
+    thoiGian = 0
+    def __init__(self, ma, ten, gioVao, gioRa) :
+        self.ma = ma
+        self.ten = ten
+        self.thoiGian = gioRa[0] * 60 + gioRa[1] - gioVao[0] * 60 - gioVao[1]
+
+    def output(self) :
+        print(self.ma, self.ten, int(self.thoiGian / 60), 'gio', self.thoiGian % 60, 'phut')
+
+n = int(input())
+a = []
+for i in range(n) :
+    ma = input()
+    ten = input()
+    gioVao = [int(x) for x in input().split(':')]
+    gioRa = [int(x) for x in input().split(':')]
+    a.append(Gamer(ma, ten, gioVao, gioRa))
+
+a = sorted(a, key= lambda x : (- x.thoiGian))
+for i in a :
+    i.output()
+Trên hệ thống phim của một website có các thông tin bộ phim bao gồm Mã phim, Tên phim, Ngày khởi chiếu, Số tập phim, Thể loại. Mã phim được đánh số tự động từ P001, P002 và tự động tăng dần. Thể loại phim bao gồm thông tin Mã thể loại và Tên thể loại. Mã thể loại được đanh số tự động tăng dần từ TL001, TL002
+from datetime import datetime
+n, m = map(int, input().split())
+
+theloai = {}
+for i in range(1, n+1):
+    theloai[f"TL{i:03d}"] = input().strip()
+
+phim = []
+
+for i in range(1, m+1):
+    ma_tl = input().strip()
+    ngay = input().strip()
+    ten = input().strip()
+    tap = int(input().strip())
+
+    ma_phim = f"P{i:03d}"
+    d = datetime.strptime(ngay, "%d/%m/%Y")
+    phim.append((d, ten, -tap, ma_phim, theloai[ma_tl], ngay, tap))
+
+phim.sort()
+
+for _, ten, neg_tap, ma_phim, tl, ngay, tap in phim:
+    print(ma_phim, tl, ngay, ten, tap)
+
+
+class Mon :
+    def __init__(self, maca, mamon, ten, ngaythi, giothi, nhom) :
+        self.maca = 'T{:03d}'.format(maca)
+        self.mamon = mamon
+        self.ten = ten
+        self.ngaythi = ngaythi
+        self.ngay = int(ngaythi[:2:])
+        self.thang = int(ngaythi[3:5:])
+        self.nam = int(ngaythi[6::])
+        self.giothi = giothi
+        self.gio = int(giothi[:2:])
+        self.phut = int(giothi[3::])
+        self.nhom = nhom
+        
+m = {}
+n, k = [int(x) for x in input().split()]
+for i in range(n) :
+    ma = input()
+    mon = input()
+    m[ma] = mon
+a = []
+for i in range(k) :
+    ma, ngay, gio, nhom = input().split()
+    a.append(Mon(i + 1, ma, m[ma], ngay, gio, nhom))
+a = sorted(a, key = lambda x : (x.nam, x.thang, x.ngay, x.gio, x.phut, x.mamon))
+for i in a :
+    print(i.maca, i.mamon, i.ten, i.ngaythi, i.giothi, i.nhom)
+Theo quy định mới, điểm tuyển sinh vào trường đại học XYZ sau khi tính tổng sẽ được cộng ưu tiên, cụ thể:
+def dt(s):
+    if s.lower()=='kinh': return 0
+    return 1.5
+def sup(s):
+    if s=='1': return 1.5
+    if s=='2': return 1
+    return 0
+def cleanName(s):
+    return ' '.join([(x[0].upper() + x[1:].lower()) for x in s.split()])
+class ob:
+    def __init__(self, i, name, sum, p, kv) -> None:
+        self.code = f'TS{str(i).zfill(2)}'
+        self.name = cleanName(name)
+        self.sum = sum + sup(kv) + dt(p)
+        if self.sum >= 20.5: self.type = 'Do'
+        else: self.type = 'Truot'
+    def __str__(self) -> str:
+        return self.code + ' ' + self.name + ' ' + f'{self.sum:.1f}' + ' ' + self.type
+a = []
+for i in range(int(input())): a.append(ob(i+1, input(), float(input()), input(), input()))
+for i in sorted(a, key=lambda x: -x.sum): print(i)
+Nhóm sinh viên PTIT cùng nhau đăng ký 3 môn học trong Học kỳ hè năm 2021 theo đúng thứ tự:
+from math import ceil
+
+class SV:
+    def __init__(self, ma, ten, d):
+        self.ma = 'SV{:02d}'.format(ma)
+        self.ten = self.rename(ten)
+        self.d = d
+
+    def rename(self, ten) -> str:
+        return ' '.join(i.title() for i in ten.strip().split())
+    
+    def __str__(self) -> str:
+        return '{:s} {:s} {:.2f} {:d}'.format(self.ma, self.ten, ceil(self.d * 100) / 100, self.rank)
+
+a = []
+for i in range(int(input())):
+    a.append(SV(i + 1, input(), (3 * int(input()) + 3 * int(input()) + 2 * int(input())) / 8))
+a = sorted(a, key = lambda x: (-x.d, x.ma))
+a[0].rank = 1
+for i in range(1, len(a)):
+    a[i].rank = a[i-1].rank if a[i].d == a[i-1].d else i + 1
+print(*a, sep = '\n')
+Công ty XYZ mỗi năm đều cập nhật hồ sơ và gán lại mã cho nhân viên (có đúng 5 ký tự) theo quy tắc sau:
+def cleanName(s):
+    return ' '.join([(x[0].upper() + x[1:].lower()) for x in s.split()])
+def x(s):
+    y = int(s[1:3])
+    if 1<=y and y<=3:
+        if s[0]=='A': return 10
+        elif s[0]=='B': return 10
+        elif s[0]=='C': return 9
+        return 8
+    elif 4<=y and y<=8:
+        if s[0]=='A': return 12
+        elif s[0]=='B': return 11
+        elif s[0]=='C': return 10
+        return 9
+    elif 9<=y and y<=15:
+        if s[0]=='A': return 14
+        elif s[0]=='B': return 13
+        elif s[0]=='C': return 12
+        return 11
+    else: 
+        if s[0]=='A': return 20
+        elif s[0]=='B': return 16
+        elif s[0]=='C': return 14
+        return 13
+class ob:
+    def __init__(self, s) -> None:
+        s = s.split()
+        self.code = s[0]
+        self.name = ' '.join(s[1:])
+class ob2:
+    def __init__(self, code, name, sday, days, o) -> None:
+        self.code = code
+        self.name = name
+        self.sum = sday*days*x(code)*10**3
+        self.o = o
+    def __str__(self) -> str:
+        return self.code + '  ' + self.name + ' ' + self.o.name + ' ' + str(self.sum)
+m = {}
+for i in range(int(input())):
+    o = ob(input())
+    m[o.code] = o
+a = []
+for i in range(int(input())): 
+    code = input()
+    a.append(ob2(code, input(), int(input()), int(input()), m[code[3:]]))
+for i in a: print(i)
+Các hộ gia đình trong thành phố X được chia thành 3 loại A, B, C với định mức sử dụng điện như sau:
+def cleanName(s):
+    return ' '.join([x[0].upper() + x[1:].lower() for x in s.split()])
+def dm(s):
+    if s=='A': return 100
+    if s=='B': return 500
+    return 200
+class ob:
+    def __init__(self, i, s, a) -> None:
+        self.code = f'KH{str(i).zfill(2)}'
+        self.name = cleanName(s)
+        self.dm = dm(a[0])
+        self.dis = int(a[2]) - int(a[1])
+        self.indm = min(self.dis, self.dm)*450
+        self.outdm = max(self.dis-self.dm, 0)*1000
+        self.vat = self.outdm//20
+        self.sum = self.indm + self.outdm + self.vat
+    def __str__(self) -> str:
+        return self.code + ' ' + self.name + ' ' + f'{self.indm} {self.outdm} {self.vat} {self.sum}'
+a = []
+for i in range(int(input())): a.append(ob(i+1, input(), input().split()))
+for i in sorted(a, key=lambda x: -x.sum): print(i)
+Mỗi team thi lập trình ICPC có 3 sinh viên đến từ cùng một trường đại học.
+class SV :
+    def __init__(self, ma, ten, team, tr) :
+        self.ma = 'C{:03d}'.format(ma)
+        self.ten = ten
+        self.team = team
+        self.tr = tr
+        
+n = int(input())
+t = [1]
+for i in range(n) :
+    t.append([input(), input()])
+n = int(input())
+a = []
+for i in range(n) :
+    ten = input()
+    team = input()
+    a.append(SV(i + 1, ten, t[int(team[4::])][0], t[int(team[4::])][1]))
+a = sorted(a, key = lambda x : x.ten)
+for i in a :
+    print(i.ma, i.ten, i.team, i.tr)
+Một câu trong văn bản được hiểu là dãy ký tự (có cả khoảng trống) cho đến khi gặp dấu ngắt câu hoặc xuống dòng (tức là đôi khi người ta quên viết dấu ngắt câu nhưng cứ xuống dòng là sang một câu mới). Các dấu ngắt câu trong bài toán này bao gồm: dấu chấm (.), dấu chấm cảm (!), dấu chấm hỏi (?).
+doc = ''
+while True:
+    try:
+        doc += input()
+        if doc[-1] not in '.?!': doc+=' .'
+        else:
+            if doc[-2] != ' ': doc = f'{doc[:-1]} {doc[-1]}'
+        doc += ' '
+    except:
+        break
+words = doc.split()
+i = 0 
+while i<len(words):
+    sen = ''
+    while i<len(words) and words[i] not in '.?!':
+        sen+=words[i]+' '
+        i+=1
+    if words[i] in '.?!': sen = sen[:-1] + words[i]
+    i+=1
+    print(sen[0].upper() + sen[1:].lower())
+Bắt đầu từ một hình tròn lớn nội tiếp tam giác vuông (hình 1) người ta thử vẽ thêm các hình tròn nhỏ hơn tiếp xúc với cạnh huyền, cạnh góc vuông của tam giác và tiếp xúc với đường tròn lớn ban đầu (hình 2).
+from math import sqrt, pow, pi
+a, b = map(float, input().split())
+c = sqrt(a*a+b*b)
+r = (a+b-c)/2
+x = sqrt(pow(b-r,2) + r*r)
+k = (x-r)/(x+r)
+p = 2*pi*pow(r,2)/(1-pow(k,2))/a/b
+print(f'{p:.4f}')
+Với 8 hình tròn có kích thước bằng nhau, người ta có thể xếp 8 hình tròn này vào một hình vuông theo cách như hình dưới đây.
+from math import sqrt
+print(f'{(sqrt(float(input()))*(1+sqrt(2)-sqrt(3))/4):.4f}')
+BIẾN VÀ KIỂU DỮ LIỆU ĐƠN GIẢN 1
+Cho một số nguyên dương N không quá 5 chữ số, hãy kiểm tra và in ra số đó chẵn hay lẻ. Nếu chẵn ghi ra chữ CHAN, nếu ngược lại ghi ra chữ LE.
+a = int(input())
+if a % 2 == 0 : print("CHAN")
+else : print("LE")
+Cho một phép toán có dạng a + b = c với a,b,c chỉ là các số nguyên dương có một chữ số.
+a = input().split()
+if int(a[0]) + int(a[2]) == int(a[4]) : print("YES")
+else : print("NO")
+Cho số nguyên dương không quá 9 chữ số. Hãy làm tròn số N theo quy tắc sau:
+t = int(input())
+for i in range(t) :
+    s = input()
+    ans = ""
+    ok = 1
+    for i in range(1, len(s)) :
+        ans += "0"
+        if ok == 0 :
+            if int(s[-i]) > 3 :
+                ok = 0
+            else :
+                ok = 1
+        else :
+            if int(s[-i]) > 4 :
+                ok = 0
+            else :
+                ok = 1
+    if ok == 0 :
+        if int(s[0]) == 9 :
+            ans += "0"
+            ans = "1" + ans
+        else :
+            ans = chr(ord(s[0]) + 1) + ans
+    else : ans = s[0] + ans
+    print(ans)
+Trong toán học, một cặp số được gọi là nguyên tố cùng nhau nếu ước số chung lớn nhất của 2 số đó là 1. Cho số nguyên dương N, giả sử ta đếm được K số nguyên dương nhỏ hơn N có tính chất nguyên tố cùng nhau với N. Hãy kiểm tra xem K có phải là số nguyên tố hay không.
+import math
+def nto(n) :
+    if n < 2 : return False
+    for i in range(2, int(math.sqrt(n)) + 1) :
+        if n % i == 0 : return False
+    return True
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    s = 0
+    for i in range(1, n) :
+        if math.gcd(i, n) == 1 : s += 1
+    if nto(s) == True : print("YES")
+    else : print("NO")
+Chữ số 4 và chữ số 7 được xem là các chữ số may mắn.
+Cho số nguyên dương N có không quá 18 chữ số. Hãy đếm xem số chữ số 4 cộng với số chữ số 7 trong N có phải bằng 4 hay bằng 7 hay không.
+a = input()
+s = 0
+for i in a :
+  if i == '4' or i == '7' : s += 1
+if s == 4 or s == 7 : print("YES")
+else : print("NO")
+Một số được xem là số may mắn nếu chỉ có các chữ số 4 và 7. Cho số nguyên dương N không quá 200 chữ số. Hãy kiểm tra xem N có phải số may mắn hay không.
+def check(a):
+  for i in a:
+    if i != '4' and i != '7' : return False
+  return True
+t = int(input())
+for i in range(t):
+  s = input()
+  if check(s) == True : print("YES")
+  else : print("NO")
+Ngân hàng thông báo lãi suất là X % mỗi năm.
+import math
+t = int(input())
+for i in range(t) :
+    n, x, m = [float(x) for x in input().split()]
+    x /= 100
+    s = math.log(m / n, 1 + x)
+    if s != int(s) : s = s + 1
+    print(int(s))
+Viết chương trình nhập vào một xâu ký tự S có độ dài không quá 100 và chuyển xâu đã nhập thành chữ in hoa.
+s = input()
+print(s.upper())
+Cho một xâu ký tự chỉ bao gồm các ký tự chữ cái, độ dài không quá 100. Hãy thực hiện:
+s = input()
+s1 = 0
+s2 = 0
+for i in s :
+  if i.isupper() : s1 += 1
+  else : s2 += 1
+if s1 > s2 : print(s.upper())
+else : print(s.lower())
+Viết chương trình kiểm tra xem số nguyên dương N có thỏa mãn tính chất: nếu ta lấy hai chữ số đầu và hai chữ số cuối của nó thì sẽ tạo ra số có hai chữ số giống nhau hay không?
+t = int(input())
+for i in range(t) :
+  s = input()
+  if s[0] == s[-2] and s[1] == s[-1] : print("YES")
+  else : print("NO")
+Cho số nguyên dương N, hãy liệt kê các số thuận nghịch M nhỏ hơn N và thỏa mãn điều kiện:
+a = []
+b = ['0', '2', '4', '6', '8']
+def Try(s) :
+    k = list(s)
+    k.reverse()
+    k = int(s + ''.join(k))
+    global a
+    a = a + [k]
+    if(len(s) != 3) :
+        for i in b :
+            Try(s + i)
+for i in range(1, 5) : Try(b[i])
+a.sort()
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    for j in a :
+        if j < n : print(j, end = " ")
+        else : break
+    print()
+Cho xâu S1 và xâu S2, độ dài không quá 100.
+a = input()
+b = input()
+p = int(input()) - 1
+print(a[:p:] + b + a[p::])
+Cho hai số nguyên dương a và b. Hãy kiểm tra xem ước số chung lớn nhất của hai số này có tổng chữ số là nguyên tố hay không.
+import math
+def nto(n) :
+    if n < 2 : return False
+    for i in range(2, int(math.sqrt(n)) + 1) :
+        if n % i == 0 : return False
+    return True 
+t = int(input())
+for i in range(t) :
+    a, b = [int(x) for x in input().split()]
+    c = math.gcd(a, b)
+    s = 0
+    while c > 0 :
+        s += c % 10
+        c = int(c / 10)
+    if nto(s) == True : print("YES")
+    else : print("NO")
+Cho ba số nguyên dương a, K, N. Hãy liệt kê tất cả các số nguyên dương b thỏa mãn cả hai điều kiện:
+a, k, n = [int(x) for x in input().split()]
+b = k - a % k + a
+ok = 0
+for i in range(b, n + 1, k) :
+    ok = 1
+    print(i - a, end = " ")
+if ok == 0 : print("-1")
+Một số được gọi là số không giảm nếu không có cặp chữ số cạnh nhau (i, i+1) nào mà số thứ i lớn hơn số thứ i+1.
+def check(s) :
+    n = len(s)
+    for i in range(1, n) :
+        if s[i - 1] > s[i] : return False
+    return True 
+t = int(input())
+for i in range(t) :
+    s = input()
+    if check(s) == True : print("YES")
+    else : print("NO")
+Cho một xâu ký tự độ dài không quá 100 chỉ bao gồm các chữ cái in hoa. Người ta thực hiện mã hóa bằng cách đếm các ký tự cạnh nhau giống nhau và viết số lượng phía sau các chữ cái đó.
+t = int(input())
+for i in range(t) :
+    s = input()
+    for i in range(0, len(s), 2) :
+        for j in range(0, int(s[i+1])) :
+            print(s[i], end ="")
+    print()
+Cho một xâu ký tự có thể có các ký tự chữ cái và chữ số. Người ta thực hiện một phép mã hóa đơn giản, trong đó đếm từ trái qua phải các ký tự giống nhau liên tiếp và viết số đếm trước ký tự đó.
+t = int(input())
+for i in range(t) :
+    s = input()
+    n = len(s)
+    k = 1
+    for i in range(1, n) :
+        if s[i] != s[i - 1] :
+            print(k,end = "")
+            print(s[i - 1], end = "")
+            k = 1
+        else : k += 1
+    print(k, end = "")
+    print(s[n - 1])
+Cho dãy ký tự chuẩn P[] gồm 28 chữ cái, trong đó có 26 chữ cái in hoa từ A đến Z, hai ký tự cuối là gạch dưới ‘_’ và dấu chấm ‘.’
+p = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_."
+while True :
+    ip = input()
+    if ip == "0" : break
+    k, s = ip.split()
+    k = int(k)
+    n = ""
+    for i in s :
+        x = 0
+        for j in p :
+            if i == j :
+                break
+            x += 1
+        x = (x + k) % 28
+        n = p[x] + n
+    print(n)
+Nhập xâu s1, giả sử gọi xâu đảo là s2. Hãy kiểm tra xem khoảng cách ký tự cạnh nhau trong hai xâu có thỏa mãn công thức sau hay không:
+def check(s) :
+    x = ""
+    for i in s : x = i + x
+    for i in range(1, len(s)) :
+        if abs(ord(s[i]) - ord(s[i - 1])) != abs(ord(x[i]) - ord(x[i - 1])) : return False
+    return True
+t = int(input())
+for i in range(t) :
+    s = input()
+    if check(s) == True : print("YES")
+    else : print("NO")
+Một số kết thúc bởi hai chữ số 86 được gọi là số phát lộc. Cho một số nguyên dương không quá 500 chữ số, hãy kiểm tra số đó có phải số phát lộc hay không.
+t = int(input())
+for i in range(t):
+  s = input()
+  if len(s) < 2 : print("NO")
+  else :
+    if s[-2] == '8' and s[-1] == '6' : print("YES")
+    else : print("NO")
+Cho xâu ký tự S bao gồm các ký tự ‘A’,..,’Z’ và các chữ số ‘0’,...,’9’. Nhiệm vụ của bạn in các ký tự từ ’A’,.., ‘Z’ trong S theo thứ tự từ điển và nối với tổng các chữ số trong S ở cuối cùng. Ví dụ S =”ACCBA10D2EW30” ta nhận được kết quả: “AABCCDEW6”.
+t = int(input())
+for z in range(t) :
+    a = input()
+    d = 0
+    s = ""
+    for i in a :
+        if i.isdigit() : d += int(i)
+        else : s += i
+    print(''.join(sorted(s)), d, sep = "")
+Cho một số nguyên (có thể âm) không quá 100.000 chữ số. Mỗi bước thực hiện thay thế số nguyên này bằng giá trị tổng chữ số của số đó. Hỏi sau mấy bước thì số đó chỉ còn duy nhất 1 chữ số.
+def trans(s) :
+    n = 0
+    for i in s : n += ord(i) - ord('0')
+    return str(n)
+
+s = input()
+d = 0
+while(len(s) > 1) :
+    s = trans(s)
+    d += 1
+print(d)
+Cho số nguyên dương N. Hãy phân tích N thành tích các thừa số nguyên tố. Kết quả được in ra theo mẫu trong ví dụ, trong đó thêm số thừa số 1 (không phải nguyên tố) ở đầu kết quả phân tích.
+import math
+t = int(input())
+for i in range(t) : 
+  n = int(input())
+  print("1", end = "")
+  for i in range(2, int(math.sqrt(n)) + 1) :
+    s = 0
+    while n % i == 0 :
+      s += 1
+      n /= i
+    if s != 0 :
+      print(" * ", end = "")
+      print(i, end = "^")
+      print(s, end = "")
+  if n > 1 :
+    print(" * ", end = "")
+    print(int(n), end = "^1")
+  print()
+Cho số nguyên dương N. Hãy kiểm tra xem N có thỏa mãn đồng thời hai tính chất sau đây hay không?
+
+def check(s) :
+  n = int(s)
+  m = 0
+  while n > 0 :
+    m += n % 10
+    n = int(n / 10)
+  if m % 10 != 0 : return False
+  for i in range(1, len(s)) :
+    if abs(int(s[i]) - int(s[i - 1])) != 2 : return False
+  return True
+t = int(input())
+for i in range(t) :
+  s = input()
+  if check(s) == True : print("YES")
+  else : print("NO")
+Khi  viết giá trị số nguyên trong Tiếng Anh, người ta thường thêm dấu phẩy để phân tách các nhóm 3 chữ số (tính từ cuối). Ví dụ số 153920529 được viết lại thành 153,920,529.
+s = input()
+ans = ""
+k = -2
+for i in range(len(s)) :
+  ans = s[-i - 1] + ans
+  if k % 3 == 0 : ans = "," + ans
+  k += 1
+print(ans.strip(','))
+Cho hai xâu ký tự s1 và s2. Xâu s2 được gọi là một “sắp đặt lại” của xâu s1 nếu tập ký tự của xâu s2 hoàn toàn giống với xâu ký tự s1, tính cả số lần xuất hiện của từng ký tự.
+
+t = int(input())
+for i in range(t) :
+    print("Test ", i + 1, ": ", sep = "", end = "")
+    a = sorted(input())
+    b = sorted(input())
+    if a == b : print("YES")
+    else : print("NO")
+Ai cũng biết số lộc phát theo quan niệm người Việt là số chỉ chứa các chữ số 6 và/hoặc 8. Người ta định nghĩa thêm “số lộc phát đẹp” là số thỏa mãn tính chất nếu xét từ trái qua phải thì nó được ghép bởi 3 số: 6; 68; 688. Không nhất thiết phải dùng đủ cả 3 số này.
+def check(s) :
+    if s[0] != '6' : return 0
+    for i in range(len(s)) :
+        if s[i] != '6' and s[i] != '8' : return 0
+        if i >= 2 and s[i - 2:i + 1:] == '888' : return 0
+    return 1
+s = input()
+if check(s) == 1 : print("YES")
+else : print("NO")
+Nhập xâu ký tự S có độ dài không quá 100. Một từ được định nghĩa là một dãy ký tự không có khoảng trống.  
+a = input().split()
+for i in a :
+    print(i)
+Trong toán học, cặp số (a,b) được gọi là nguyên tố cùng nhau nếu ước số chung lớn nhất của a và b bằng 1.
+import math
+n, k = [int(x) for x in input().split()]
+a = 10**(k-1)
+b = 10**k
+x = 1
+for i in range(a, b) :
+    if math.gcd(i, n) == 1 :
+        print(i, end = " ")
+        if x % 10 == 0 : print()
+        x += 1
+Cơ số từ 2 đến 36 được xây dựng từ 10 chữ số (0 đến 9) và 26 chữ cái Tiếng Anh in hoa (‘A’ đến ‘Z’).
+f = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+t = int(input())
+for i in range(t):
+    n, k = [int(x) for x in input().split()]
+    s = ''
+    while (n > 0):
+        x = n % k
+        s = f[x] + s
+        n = int(n / k)
+    print(s)
+Trong hệ cơ số thập phân, một số được gọi là thuận nghịch nếu đọc ngược lại ta vẫn thu được chính số đó. Ví dụ: 12321, 2345432, 111111 …
+a, b, m = map(int, input().split())
+if m>3:
+    cnt = 0
+    for i in [0,1]:
+        if a<=i and i<=b: cnt+=1
+    print(cnt)
+elif m==3:
+    cnt = 0
+    for i in [0, 1, 6643, 1422773, 5415589]:
+        if a<=i and i<=b: cnt+=1
+    print(cnt)
+elif m==2:
+    cnt = 0
+    for i in range(1,10000):
+        s1 = bin(i)[2:]
+        s2 = ''.join(reversed(s1))  
+        arr = [s1+s2, s1+'0'+s2, s1+'1'+s2]
+        for j in arr:
+            x = int(j,2)
+            if a<=x and x<=b: cnt+=1
+    for i in [0,1]:
+        if a<=i and i<=b: cnt+=1
+    print(cnt)
+else: print(0)
+Một cặp số nguyên dương (a,b) được gọi là nguyên tố cùng nhau nếu a và b có ước chung lớn nhất bằng 1. Một bộ ba số (a, b, c) được gọi là bộ ba nguyên tố cùng nhau nếu a < b < c và các cặp (a,b), (b,c), (a,c) đều nguyên tố cùng nhau.
+import math
+def check(a, b) :
+    if math.gcd(a, b) == 1 : return True
+    return False
+a, b = [int(x) for x in input().split()]
+b += 1
+for i in range(a, b) :
+    for j in range(i + 1, b) :
+        for k in range(j + 1, b):
+            if check(i, j) and check(j, k) and check(i, k):
+                print("(",end = "")
+                print(i, end = ", ")
+                print(j, end = ", ")
+                print(k, end = ")\n")
+Cho một số nguyên không âm N được biểu diễn như một xâu ký tự. Hãy sử dụng nhiều nhất một phép đổi chỗ các chữ số trong N sao cho ta nhận được số lớn nhất nhỏ hơn N. Phép biến đổi có số 0 cho số đầu tiên sẽ không được chấp nhận. Ví dụ số N=354 thì số lớn nhất nhỏ hơn N được tạo ra là 345. Số 100 sẽ không có phép biến đổi vì số 010 có số 0 đứng đầu.
+t = int(input())
+for k in range(t) :
+	a = input()
+	n, p , s = len(a), -1, '0'
+	for i in range(n - 2, -1, -1) :
+		if a[i] > a[i + 1] :
+			p = i
+			break
+	if p == -1 :
+		print(-1)
+		continue
+	q = p + 1
+	for i in range(p + 2, n) :
+		if a[i] > s and a[i] > a[p + 1] and a[i] < a[p] :
+			s = a[i]
+			q = i
+	a = a[:p:] + a[q] + a[p + 1:q:] + a[p] + a[q + 1::]
+	if a[0] == '0' : print(-1)
+	else : print(a)
+Cho một số nhị phân, người ta nhận ra quy tắc đơn giản là chỉ cần xét lần lượt các cụm ba chữ số nhị phân tình từ cuối của số đó, sau đó chuyển lần lượt từng cụm sang giá trị thập phân tương ứng thì kết quả nhận được chính là biểu diễn của số đó trong hệ cơ số 8. Nếu cụm cuối cùng bị thiếu thì bổ sung các chữ số 0 cho đủ 3 chữ số.
+print(oct(int(input(), 2))[2::])
+Nhập số nguyên dương N (1 < N < 10000).
+
+Viết chương trình tính tổng:
+
+S = 1 + 1/3 + 1/5 + … + 1/N nếu N lẻ
+S = 1/2 + 1/4 + 1/6 + … + 1/N nếu N chẵn
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    s = 0
+    k = 2
+    if n % 2 == 1 : k = 1
+    for i in range(k, n + 1, 2) :
+        s += 1/i
+    print("{:.6f}".format(s))
+Số nguyên dương N được gọi là phản nguyên tố nếu như số lượng ước số của N lớn hơn số lượng ước số của tất cả các số nguyên dương nhỏ hơn N.
+
+import sys
+from bisect import bisect_left
+a = [1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, 840, 1260, 1680, 2520, 5040, 7560, 10080, 15120, 20160, 25200, 27720, 45360, 50400, 55440, 83160, 110880, 166320, 221760, 277200, 332640, 498960, 554400, 665280, 720720, 1081080, 1441440, 2162160, 2882880, 3603600, 4324320, 6486480, 7207200, 8648640, 10810800]
+t = int(input())
+i = 0
+for line in sys.stdin :
+    n = int(line)
+    print(X[bisect_left(a, n)])
+    i += 1
+    if i == t:  break
+Cho một số nguyên dương N. Mỗi bước bạn thực hiện tính tổng của N với giá trị số đảo ngược của N. Bạn sẽ dừng lại khi gặp giá trị chia hết cho 7 hoặc khi đã thực hiện quá 1000 bước lặp.
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    while n % 7 != 0 :
+        n += int(str(n)[::-1])
+    print(n)
+Một số nguyên dương được gọi là đẹp nếu số đó chỉ có hai chữ số khác nhau và các chữ số ở cách nhau 2 vị trí đều bằng nhau. Ví dụ: 121, 1313131, 5656 …
+def check(s) :
+    for i in range(2, len(s)) :
+        if s[i] != s[i - 2] : return False
+    return True
+t = int(input())
+for i in range(t) :
+    s = input()
+    if check(s) == True : print("YES")
+    else : print("NO")
+Cho một xâu ký tự. Quá trình mã hóa D - R - M sẽ trải qua ba bước Chia (Divide), Xoay (Rotate) và Trộn (Merge). Ví dụ với xâu: EWPGAJRB  quá trình này sẽ diễn ra như sau:
+def Try(s) :
+	d = 0
+	x = ''
+	for i in s :
+		d += ord(i) - ord('A')
+	for i in s :
+		x += chr(((ord(i) - ord('A') + d) % 26 + ord('A')))
+	return x
+t = int(input())
+for k in range(t) :
+	s, x = input(), ''
+	n = int(len(s) / 2)
+	a, b = s[:n:], s[n::]
+	a = Try(a)
+	b = Try(b)
+	for i in range(n) :
+		x += chr(((ord(a[i]) - 2 * ord('A') + ord(b[i])) % 26 + ord('A')))
+	print(x)
+Một số nguyên dương được gọi là số tăng giảm nếu thỏa mãn các điều kiện:
+def check(s) :
+    if len(s) < 3 : return False
+    if s[1] <= s[0] or s[-2] <= s[-1] : return False 
+    p1 = 1
+    p2 = len(s) - 2
+    while s[p1] > s[p1 - 1] and p1 < len(s) : p1 += 1
+    while s[p2] > s[p2 + 1] and p2 >= 0 : p2 -= 1
+    if p1 == p2 + 2 : return True
+    else : return False
+t = int(input())
+for i in range(t) :
+    s = input()
+    if check(s) == True : print("YES")
+    else : print("NO")
+Hệ cơ số 3 chỉ biểu diễn các số sử dụng ba chữ số là 0, 1, 2.
+def check(s) :
+    for i in s :
+        if i != '0' and i != '1' and i != '2' : return False
+    return True
+t = int(input())
+for i in range(t) :
+    s = input()
+    if check(s) == True : print("YES")
+    else : print("NO")
+Cho số nguyên dương N không quá 6 chữ số.
+a = []
+b = ['0', '2', '4', '6', '8']
+def Try(s) :
+    k = list(s)
+    k.reverse()
+    k = int(s + ''.join(k))
+    global a
+    a = a + [k]
+    if(len(s) != 3) :
+        for i in b :
+            Try(s + i)
+for i in range(1, 5) : Try(b[i])
+a.sort()
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    for j in a :
+        if j < n : print(j, end = " ")
+        else : break
+    print()
+Trong lập trình cơ bản, một từ được hiểu là một dãy ký tự liên tiếp không chứa khoảng trống, dấu tab hoặc dấu xuống dòng.
+a = [i.lower() for i in input().split(' ')]
+b = [i.lower() for i in input().split(' ')]
+m1, m2, m3 = {}, {}, {}
+for i in a :
+    m1[i] = 1
+    m2[i] = 1
+for i in b :
+    m1[i] = 1
+    m3[i] = 1
+for i in sorted(list(m1)) : print(i, end = ' ')
+print()
+for i in sorted(list(m2)) :
+    if i in m3 : print(i, end = ' ')
+Một xâu ký tự là xâu palindrome là một xâu khác rỗng mà nếu lật ngược xâu ấy ta thu được xâu ban đầu. Ví dụ các xâu abcba, dd là xâu palindrome, trong khi các xâu abc, ptit thì không phải.
+s = input()
+print(len(s) - 1)
+Bài toán Tháp Hà Nội đã rất nổi tiểng. Bắt đầu có các đĩa xếp chồng lên cột A theo thứ tự kích thước giảm dần, nhỏ nhất ở trên cùng. Cột B và cột C ban đầu không có đĩa nào cả.
+def Try(n, a, b, c):
+	if n == 1 :
+		print(a, "->", b)
+		return
+	Try(n - 1, a, c, b)
+	print(a,"->",b)
+	Try(n - 1, c, b, a)
+n = int(input())
+Try(n, 'A', 'C', 'B')
+Cho số nguyên dương N có không quá 500 chữ số.
+import math
+def nto(n) :
+    if n < 2 : return False
+    for i in range(2, int(math.sqrt(n)) + 1) :
+        if n % i == 0 : return False
+    return True
+t = int(input())
+for i in range(t) :
+    s = input()
+    if nto(int(s[-4::])) == True : print("YES")
+    else : print("NO")
+Một số nguyên dương được gọi là ưu thế nguyên tố nếu thỏa mãn cả hai điều kiện:
+import math
+def nto(n) :
+    if n < 2 : return False
+    for i in range(2, int(math.sqrt(n)) + 1) :
+        if n % i == 0 : return False
+    return True
+def check(n) :
+    if nto(len(n)) == False : return False
+    s1 = 0
+    s2 = 0
+    for i in n :
+        if nto(int(i)) == True : s1 += 1
+        else : s2 += 1
+    if s1 > s2 : return True
+    return False
+t = int(input())
+for i in range(t) :
+    n = input()
+    if check(n) == True : print("YES")
+    else : print("NO")
+Hãy liệt kê tất cả các xâu ký tự có độ dài không quá N, chỉ tạo bởi các ký tự A, B, C và thỏa mãn các điều kiện sau:def Try(s, n, a, b, c) :
+	if len(s) == n and a <= b and b <= c and a > 0 : print(s)
+	if len(s) < n :
+		Try(s + "A", n, a + 1, b, c)
+		Try(s + "B", n, a, b + 1, c)
+		Try(s + "C", n, a, b, c + 1)
+n = int(input())
+for i in range(3, n + 1) : Try("", i, 0, 0, 0)
+Cho số nguyên dương N có thể rất lớn nhưng không quá 500 chữ số.
+def check(n) :
+    s = 0
+    for i in n :
+        s += int(i)
+    if s == int(str(s)[::-1]) and s > 10 : return True
+    return False
+t = int(input())
+for i in range(t) :
+    n = input()
+    if check(n) == True : print("YES")
+    else : print("NO")
+Cho số nguyên dương N có thể rất lớn nhưng không quá 500 chữ số.
+Hãy kiểm tra xem tổng các chữ số của N có phải là một số nguyên tố hay không.
+import math
+def nto(n) :
+    if n < 2 : return False
+    for i in range(2, int(math.sqrt(n)) + 1) :
+        if n % i == 0 : return False
+    return True
+def check(n) :
+    s = 0
+    for i in n :
+        s += int(i)
+    if nto(s) : return True
+    return False
+t = int(input())
+for i in range(t) :
+    n = input()
+    if check(n) == True : print("YES")
+    else : print("NO")
+Cho số nguyên dương N có thể rất lớn nhưng không quá 500 chữ số.
+Hãy kiểm tra xem N có chia hết cho 3 hay không.
+t = int(input())
+for i in range(t) :
+    n = int(input())
+    if n % 3 == 0 : print("YES")
+    else : print("NO")
+Danh sách
+Cho dãy số A[] chỉ bao gồm các số nguyên dương. Người ta thu gọn dần dãy số bằng cách loại bỏ các cặp phần tử kề nhau mà có tổng là chẵn. Sau khi cặp phần tử đó bị loại ra thì dãy số được dồn lại. Cứ tiếp tục như vậy cho đến khi không còn cặp phần tử nào kề nhau có tổng chẵn nữa.
+n, a, st = input(), list(map(int, input().split())), []
+for i in a:
+    if len(st) == 0 or (st[-1]+i)&1: st.append(i)
+    else: st.pop(-1)
+print(len(st))
+Cho xâu ký tự có độ dài n bao gồm các ký tự từ ‘a’, ‘b’, …, ‘z’ và các số từ 0 đến 9. Nhiệm vụ của bạn là tìm số nhỏ nhất xuất hiện trong xâu. Ví dụ với xâu X[]=”12ab29cd19” ta có kết quả là 12.
+import re
+for t in range(int(input())):
+    a = sorted([int(x) for x in re.split("[a-z]+", input()) if x != ''])
+    if(len(a)>0): print(a[0])
+Cho xâu ký tự có độ dài n bao gồm các ký tự từ ‘a’, ‘b’, …, ‘z’ và các số từ 0 đến 9. Nhiệm vụ của bạn là tìm số lớn nhất xuất hiện trong xâu. Ví dụ với xâu X[]=”12ab29cd19” ta có kết quả là 29.
+import re
+for t in range(int(input())):
+    a = sorted([int(x) for x in re.split("[a-z]+", input()) if x != ''])
+    if(len(a)>0): print(a[-1])
+Cho xâu nhị phân X[] có độ dài n. Nhiệm vụ của bạn là hãy đổi xâu nhị phân thành một số ở hệ cơ số b, trong đó b chỉ là một trong các số 2, 4, 8, 16. Ví dụ xâu X =”10010100010010101” và b = 8 ta có kết quả là 224225 là số ở hệ cơ số 8.
+from math import log2
+def toS(i):
+    if i<=9: return str(i)
+    return chr(ord('A') + i-10)
+def convert(s):
+    r = 0
+    for i in s: r = r<<1 | int(i)
+    return toS(r)
+for t in range(int(input())):
+    b = int(log2(int(input())))
+    s = input()
+    r = ''
+    while s!='':
+        r = convert(s[-b:]) + r
+        s = s[:-b]
+    print(r)
+Cho hai số nguyên dương X1, X2. Ta chỉ được phép thay đổi chữ số p thành chữ số q và ngược lại chữ. Hãy đưa ra tổng nhỏ nhất và tổng lớn nhất các số X1 và X2 được tạo ra theo nguyên tắc kể trên.
+def to(a, b, s: str):
+    return int(s.replace(str(a), str(b)))
+for t in range(int(input())):
+    a, b = [int(x) for x in input().split()]
+    x1 = input()
+    if len(x1.split()) > 1: x1, x2 = x1.split()
+    else: x2 = input()
+    if a > b: a, b = b, a
+    print(to(b, a, x1) + to(b, a, x2), to(a, b, x1) + to(a, b, x2))
+Cho mảng A[] gồm N số nguyên khác nhau. Nhiệm vụ của bạn là đếm số lượng các bộ ba phần tử khác nhau có tổng là 0. Ví dụ A[] = {0, -1, 2, -3, 1}, ta nhận được kết quả là 2 vì có hai bộ 3: (0, -1, 1) và (2, -3, 1).
+for t in range(int(input())):
+    n, cnt= int(input()), 0
+    a = sorted([int(x) for x in input().split()])
+for i in range(n):
+        l, r = i+1, n-1
+        while l < r:
+            s = a[l] + a[i] + a[r]
+            if s == 0: 
+                cnt += 1
+                l += 1
+            elif s > 0: r -= 1
+            else: l += 1
+    print(cnt)
+Cho mảng A[] gồm N số nguyên.      
+Nhiệm vụ của bạn là tìm tổng nhỏ nhất của bộ ba số trong mảng. Ví dụ A[] = {1, 2, 3, 4, 5}, ta nhận được tổng nhỏ nhất của bộ ba số là 1 + 2 + 3 = 6. Chú ý nếu sử dụng kỹ thuật sắp xếp, submit lời giải của bạn sẽ bị fail.
+from sys import stdin
+c, e = 0, 10**9
+# stdin = open('d:/code/in.txt')
+for t in range(int(stdin.readline())):
+    stdin.readline()
+    l = stdin.readline()
+    x, y, z = [e, e, e]
+    n = len(l)//3
+    while l[n] != ' ': n-=1
+    a = l[:n]
+    l = l[n:]
+    for i in map(int, a.split()): 
+        if i<=x:
+            z = y
+            y = x
+            x = i
+        elif i<=y:
+            z = y 
+            y = i
+        elif i<z: z = i
+    n = len(l)>>1
+    while l[n] != ' ': n-=1
+    for i in map(int, l[:n].split()):
+        if i >= z: continue
+        if i<=x:
+            z = y
+            y = x
+            x = i
+        elif i<=y:
+            z = y 
+            y = i
+        else: z = i
+    for i in map(int, l[n:].split()):
+        if i<=x:
+            z = y
+            y = x
+            x = i
+        elif i<=y:
+            z = y 
+            y = i
+        elif i<z: z = i
+    print(x+y+z)
+Cho mảng A[] gồm N số nguyên.      
+Nhiệm vụ của bạn là tìm tổng lớn nhất của bộ ba số trong mảng. Chú ý nếu sử dụng kỹ thuật sắp xếp, submit lời giải của bạn sẽ bị fail.
+Ví dụ A[] = {1, 2, 3, 4, 5}, ta nhận được tổng lớn nhất của bộ ba số là 3 + 4 + 5 = 12. 
+from sys import stdin
+c, e = 0, -10**9
+# stdin = open('d:/code/in.txt')
+for t in range(int(stdin.readline())):
+    stdin.readline()
+    l = stdin.readline()
+    x, y, z = [e, e, e]
+    n = len(l)//3
+    while l[n] != ' ': n-=1
+    a = l[:n]
+    l = l[n:]
+    for i in map(int, a.split()): 
+        if i>=x:
+            z = y
+            y = x
+            x = i
+        elif i>=y:
+            z = y 
+            y = i
+        elif i>z: z = i
+    n = len(l)>>1
+    while l[n] != ' ': n-=1
+    for i in map(int, l[:n].split()):
+        if i <= z: continue
+        if i>=x:
+            z = y
+            y = x
+            x = i
+        elif i>=y:
+            z = y 
+            y = i
+        else: z = i
+    for i in map(int, l[n:].split()):
+        if i>=x:
+            z = y
+            y = x
+            x = i
+        elif i>=y:
+            z = y 
+            y = i
+        elif i>z: z = i
+    print(x+y+z)
+Cho mảng A[] gồm N số nguyên và số tự nhiên d.    Hãy thực hiện quay mảng A[] với d phần tử từ phải qua trái. Ví dụ A[] = {1, 2, 3, 4, 5}, d = 2 ta nhận được mảng A[] = {3, 4, 5, 1, 2}.
+for t in range(int(input())):
+    n, d = map(int, input().split())
+    a = input().split()
+    print(' '.join(a[d:]), ' '.join(a[:d]))
+Bộ ba số nguyên tố được gọi là Prime- Triplet nếu nó là bộ ba số nguyên tố dưới dạng (p, p +2, p + 6) hoặc (p, p + 4, p+6), trong đó p là một số nguyên tố. Ví dụ các bộ ba số (5, 7, 11) hoặc (7, 11, 13) đều là các Prime-Triplet. Cho số tự nhiên N, nhiệm vụ của bạn là đếm số các Prime-Triplet nhỏ hơn N.      
+from math import sqrt
+nt, a= [1 for i in range(int(1e6)+2)], []
+nt[0]=nt[1]=0
+for i in range(2, int(sqrt(1e6))):
+    if nt[i]==1:
+        for u in range(i, int(1e6/i)): nt[u*i]=0
+for i in range(int(1e6)): 
+    if nt[i]: a.append(i)
+ans = [0 for i in range(int(1e6)+5)]
+cnt = 0
+for i in range(len(a)-2):
+    if a[i+2]-a[i] == 6 and (a[i+1]-a[i] == 2 or a[i+1]-a[i]):
+        ans[a[i+2]+1] = cnt + 1
+        cnt += 1
+for i in range(1, int(1e6)+2):
+    if ans[i]>0: continue
+    else: ans[i] = ans[i-1]
+for t in range(int(input())): print(ans[int(input())])
+Một số nguyên dương K được gọi là Emirp Number nếu K là số nguyên tố, đảo các chữ số của K cũng là một số nguyên tố nhưng không phải chính nó (không đối xứng). Ví dụ số 11 không phải là số Emirp Number. Cho số tự nhiên N, nhiệm vụ của bạn là hãy liệt kê tất cả các số Emirp Number nhỏ hơn N.
+from math import sqrt
+nt, a= [1 for i in range(int(1e6)+10)], []
+nt[0]=nt[1]=0
+for i in range(2, int(sqrt(1e6))):
+    if nt[i]==1:
+        for u in range(i, 1000000//i+1): nt[u*i]=0
+for i in range(int(1e6)): 
+    if nt[i] == 1: a.append(i)
+ans=[]
+for i in a:
+    x=int(''.join(reversed(str(i))))
+    if x > i and nt[x]: ans.append([i, x])
+for t in range(int(input())):
+    n = int(input())
+    for i in ans:
+        if i[1] < n: print(i[0], i[1], end=' ')
+    print()
+Một số nguyên dương N được gọi là Perfect Prime nếu N là số nguyên tố; đảo ngược các chữ số của N cũng là một số nguyên tố; tổng các chữ số của N là một số nguyên tố và mỗi chữ số của N cũng là một số nguyên tố. Cho số nguyên dương N, hãy kiểm tra N có phải là Perfect Prime hay không? Đưa ra “Yes” nếu N là Perfect Prime, ngược lại đưa ra “No”.
+from math import sqrt
+
+def nt(x):
+    if x<2: return False
+    if x==2: return True
+    if x%2==0: return False
+    for i in range(3, int(sqrt(x)) + 1, 2):
+        if x%i==0: return False
+    return True
+def check(s):
+    sum=0
+    for i in s:
+        if not nt(int(i)): return 'No'
+        sum+=int(i)
+    if nt(sum) and nt(int(s)) and nt(int(str(''.join(reversed(s))))): return 'Yes'
+    return 'No'
+for t in range(int(input())):
+    print(check(input()))
+Một số nguyên dương N được gọi là số Krish nếu tổng giai thừa các chữ số của N bằng chính nó. Ví dụ N = 145 = 1! + 4! + 5! = 145 là một số Krish. Cho số nguyên dương N, hãy kiểm tra N có phải là một số Krish hay không? Đưa ra “Yes” nếu N là một số Krish, ngược lại đưa ra “No”.
+def gt(x):
+    if x==0: return 1
+    return x*gt(x-1)
+for t in range(int(input())):
+    s = input()
+    sum = 0
+    for i in s: sum += gt(int(i))
+    print('Yes') if sum == int(s) else print('No')
+Con số duyên nợ là con số có chữ số đầu và chữ số cuối giống nhau.
+Viết chương trình kiểm tra xem một số nguyên dương n ghi trong hệ thập phân có chữ số đầu và chữ số cuối giống nhau không?
+
+for t in range(int(input())):
+    s = input()
+    print('YES') if s[0]==s[-1] else print('NO')
+Tí năm nay đã lên lớp 1 rồi, Tết đến Tí rất vui vì nhận được rất nhiều lời chúc.
+a = set()
+for t in range(int(input())):
+    a.add(input())
+print(len(a))
+Trong chiêm tinh học phương Tây, các cung Hoàng Đạo là mười hai cung 30° của Hoàng Đạo, bắt đầu từ điểm phân Vernal (một trong những giao điểm của Hoàng Đạo với Xích đạo thiên cầu), còn được gọi là Điểm Đầu của Bạch Dương. Thứ tự của các cung Hoàng Đạo là Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Thiên Yết, Nhân Mã, Ma Kết, Bảo Bình và Song Ngư. Mỗi khu vực được đặt tên theo chòm sao mà nó đi qua trong lúc đặt tên. Cung hoàng đạo của một người được xác định dựa trên ngày sinh bằng bảng dưới đây:
+import os
+from datetime import date
+def zodiac(Day, Month):
+    if ((int(Month)==12 and int(Day) >= 22)or(int(Month)==1 and int(Day)<= 19)):
+        return 'Ma Ket'
+    elif ((int(Month)==1 and int(Day) >= 20)or(int(Month)==2 and int(Day)<= 18)):
+        return 'Bao Binh'
+    elif ((int(Month)==2 and int(Day) >= 19)or(int(Month)==3 and int(Day)<= 20)):
+        return 'Song Ngu'
+    elif ((int(Month)==3 and int(Day) >= 21)or(int(Month)==4 and int(Day)<= 19)):
+        return 'Bach Duong'
+    elif ((int(Month)==4 and int(Day) >= 20)or(int(Month)==5 and int(Day)<= 20)):
+        return 'Kim Nguu'
+    elif ((int(Month)==5 and int(Day) >= 21)or(int(Month)==6 and int(Day)<= 20)):
+        return 'S
